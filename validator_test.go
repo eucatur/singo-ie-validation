@@ -583,6 +583,34 @@ func TestValidatorDFWithCharactersInvalid(t *testing.T) {
 	assert.False(t, result)
 }
 
+func TestValidatorDFValidLessThanDefaulLength(t *testing.T) {
+
+	validator := NewIEValidator()
+
+	validator.IE = "799616600104" // Valido
+	validator.UF = validators.DF
+
+	result, err := validator.Validate()
+	if err != nil {
+		t.Error("Erro na validacao do estado do Distrito Federal")
+	}
+	assert.True(t, result)
+}
+
+func TestValidatorDFValidLessThanDefaulLengthWithMask(t *testing.T) {
+
+	validator := NewIEValidator()
+
+	validator.IE = "79.96166.001-04" // Valido
+	validator.UF = validators.DF
+
+	result, err := validator.Validate()
+	if err != nil {
+		t.Error("Erro na validacao do estado do Distrito Federal")
+	}
+	assert.True(t, result)
+}
+
 /**************************************************************
  * ESPIRITO SANTO
  *************************************************************/
@@ -1713,6 +1741,18 @@ func TestValidatorROWITHNOZerosWithIEValid(t *testing.T) {
 		t.Error("Erro na validacao do estado de Rondonia")
 	}
 	assert.True(t, result)
+}
+
+func TestValidatorROInvalidIEMoreThanLengthExpected(t *testing.T) {
+
+	validator := NewIEValidator()
+
+	validator.IE = "123456789012345" // IE inválida com tamanho maior que o esperado
+	validator.UF = validators.RO
+
+	result, err := validator.Validate()
+	assert.Nil(t, err)
+	assert.False(t, result)
 }
 
 /**************************************************************
